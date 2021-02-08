@@ -3,6 +3,7 @@
 @section('content')
 
 	<a href="{{ route('employees-index') }}">ALL EMPLOYEES</a> <br>
+	<a href="{{ route('typologies-index') }}">ALL TYPOLOGIES</a> <br><br>
 	<a href="{{ route('task-create') }}">CREATE NEW TASK</a>
 
 	<h1>Tasks:</h1>

@@ -46,6 +46,28 @@
 
 		<br>
 
+		<label for="typologies[]">Typologies:</label> <br>
+
+		@foreach ($typologies as $typology)
+			<input name="typologies[]" type="checkbox" value="{{ $typology -> id }}"
+
+			{{-- VERSIONE PRO --}}
+			@if ($task -> typologies -> contains($typology -> id))
+				checked
+			@endif
+			
+			{{-- VERSIONE ESTESA --}}
+			{{-- @foreach ($task -> typologies as $task_typology)
+				@if ($task_typology -> id == $typology -> id)
+					checked
+				@endif
+			@endforeach --}}
+
+			> {{ $typology -> name }} <br>
+		@endforeach
+
+		<br>
+
 		<input type="submit" value="SAVE">
 
 	</form>

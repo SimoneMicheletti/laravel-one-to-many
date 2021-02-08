@@ -8,7 +8,7 @@
 
 	<h1>Typology: {{ $typology -> id }}</h1>
 
-	<a href="#">EDIT</a>
+	<a href="{{ route('typology-edit', $typology -> id) }}">EDIT</a>
 
 	<ul>
 		<li>Name: {{ $typology -> name }}</li>
