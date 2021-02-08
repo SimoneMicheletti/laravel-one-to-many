@@ -17,3 +17,7 @@ Route::get('/create/task', 'TaskController@create') -> name('task-create');
 Route::post('/store/task', 'TaskController@store') -> name('task-store');
 Route::get('/edit/task/{id}', 'TaskController@edit') -> name('task-edit');
 Route::post('/update/task/{id}', 'TaskController@update') -> name('task-update');
+
+// Typologies Routes
+Route::get('/typologies', 'TypologyController@index') -> name('typologies-index');
+Route::get('/typology/{id}', 'TypologyController@show') -> name('typology-show');

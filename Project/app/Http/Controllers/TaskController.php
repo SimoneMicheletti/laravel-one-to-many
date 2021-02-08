@@ -40,7 +40,9 @@ class TaskController extends Controller
 
 	// Non aggiorna employee_id
 	public function update(Request $request, $id) {
+		// dd($request -> All());
 		Task::findOrFail($id) -> update($request -> All());
+		// dd(Task::findOrFail($id));
 		return redirect() -> route('task-show', $id);
 	}
 

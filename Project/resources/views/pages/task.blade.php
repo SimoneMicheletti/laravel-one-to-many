@@ -18,6 +18,17 @@
 				{{ $task -> employee -> name }} {{ $task -> employee -> lastname }}
 			</a>
 		</li>
+		<li>Typology:
+			<ul>
+				@foreach ($task -> typologies as $typology)
+					<li>
+						<a href="{{ route('typology-show', $typology -> id) }}">
+							{{ $typology -> name }}
+						</a>				
+					</li>
+				@endforeach
+			</ul>
+		</li>
 	</ul>
 
 @endsection
