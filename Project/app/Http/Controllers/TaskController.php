@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Task;
 use App\Employee;
 use App\Typology;
@@ -30,12 +31,21 @@ class TaskController extends Controller
 
 		$data = $request -> All();
 
+		Validator::make($request -> all(), [
+			'title' => 'required|max:20',
+			'description' => 'required|min:5|max:200',
+		]) -> validate();
+
 		$task = Task::make($data);
 		$employee = Employee::findOrFail($request -> get('employee_id'));
 		$task -> employee() -> associate($employee);
 		$task -> save();
 
-		$typologies = Typology::findOrFail($data['typologies']);
+		if (array_key_exists('tasks', $data)) {
+			$typologies = Typology::findOrFail($data['typologies']);
+		} else {
+			$typologies = [];
+		}
 		$task -> typologies() -> attach($typologies);
 
 		return redirect() -> route('tasks-index');
@@ -52,13 +62,22 @@ class TaskController extends Controller
 
 		$data = $request -> All();
 
+		Validator::make($request -> all(), [
+			'title' => 'required|max:20',
+			'description' => 'required|min:5|max:200',
+		]) -> validate();
+
 		$task = Task::findOrFail($id);
 		$employee = Employee::findOrFail($data['employee_id']);
 		$task -> update($data);
 		$task -> employee() -> associate($employee);
 		$task -> save();
 
-		$typologies = Typology::findOrFail($data['typologies']);
+		if (array_key_exists('tasks', $data)) {
+			$typologies = Typology::findOrFail($data['typologies']);
+		} else {
+			$typologies = [];
+		}
 		$task -> typologies() -> sync($typologies);
 
 		return redirect() -> route('task-show', $id);

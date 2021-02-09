@@ -9,8 +9,19 @@
 	<script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
-	
+
 	@include('components.header')
+	
+	@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>Error: {{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
+	
 	@yield('content')
 	@include('components.footer')
 

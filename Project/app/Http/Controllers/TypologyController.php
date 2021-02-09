@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Typology;
 use App\Task;
@@ -25,10 +25,24 @@ class TypologyController extends Controller
 	}
 
 	public function store(Request $request) {
+
 		$data = $request -> All();
+
+		Validator::make($request -> all(), [
+			'name' => 'required|max:20',
+			'description' => 'required|min:5|max:200',
+		]) -> validate();
+
+
 		$typology = Typology::create($data);
-		$tasks = Task::findOrFail($data['tasks']);
+
+		if (array_key_exists('tasks', $data)) {
+			$tasks = Task::findOrFail($data['tasks']);
+		} else {
+			$tasks = [];
+		}
 		$typology -> tasks() -> attach($tasks);
+
 		return redirect() -> route('typologies-index');
 	}
 
@@ -39,11 +53,24 @@ class TypologyController extends Controller
 	}
 
 	public function update(Request $request, $id) {
+
 		$data = $request -> All();
+
+		Validator::make($request -> all(), [
+			'name' => 'required|max:20',
+			'description' => 'required|min:5|max:200',
+		]) -> validate();
+
 		$typology = Typology::findOrFail($id);
 		$typology -> update($data);
-		$tasks = Task::findOrFail($data['tasks']);
+
+		if (array_key_exists('tasks', $data)) {
+			$tasks = Task::findOrFail($data['tasks']);
+		} else {
+			$tasks = [];
+		}
 		$typology -> tasks() -> sync($tasks);
+
 		return redirect() -> route('typology-show', $id);
 	}
  
